@@ -1,0 +1,37 @@
+.window-controls {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.window-controls__item {
+  max-height: 16px;
+}
+
+.window-controls__btn {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  cursor: pointer;
+}
+
+.window-controls__btn_type_minimize {
+  background-image: url(../../assets/images/line.svg);
+  margin-right: 18px;
+}
+
+.window-controls__btn_type_expand {
+  background-image: url(../../assets/images/rectangle.svg);
+  margin-right: 18px;
+}
+
+.window-controls__btn_type_close {
+  background-image: url(../../assets/images/cross.svg);
+}
