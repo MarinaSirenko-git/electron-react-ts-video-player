@@ -2,7 +2,7 @@ const { app, ipcMain, dialog } = require('electron')
 
 const openFileDialog = (win) => {
   ipcMain.on('select-file-dialog', async (e, data) => {
-    let result = await dialog.showOpenDialogSync(win, {
+    let path = await dialog.showOpenDialogSync(win, {
         title: 'Выбор файла',
         defaultPath: 'C:\\',
         buttonLabel: 'Выбрать файл',
@@ -11,22 +11,22 @@ const openFileDialog = (win) => {
         ],
         properties: ['openFile']
       })
-      console.log(result)
+      win.webContents.send('file-path', path);
   })  
 }
 
 const openFolderDialog = (win) => {
   ipcMain.on('select-folder-dialog', async (e, data) => {
-  let result = await dialog.showOpenDialogSync(win, {
+  let path = await dialog.showOpenDialogSync(win, {
       title: 'Выбор каталога',
       defaultPath: 'C:\\',
       buttonLabel: 'Выбрать каталог',
       filters: [
-         { name: 'Доступные форматы', extensions: ['avi', 'mkv', 'mov', 'flv', 'vob', 'mp4'] },
+         { name: 'Доступные форматы', extensions: ['avi', 'mkv', 'mov', 'ogv', 'webm', 'mp4'] },
       ],
       properties: ['openDirectory', 'createDirectory']
     })
-    console.log(result)
+    win.webContents.send('folder-path', path);
 })
 }
 

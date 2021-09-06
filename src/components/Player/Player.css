@@ -1,0 +1,19 @@
+.player-container {
+  width: 1228px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.player {
+  width: 1228px;
+  height: 725px;
+  background-color: black;
+}
+
+.player__controls {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}

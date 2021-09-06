@@ -1,19 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../Header/Header'
+import Player from '../Player/Player'
 import './App.css'
 const electron = window.require('electron')
-const { contextBridge, ipcRenderer } = electron
+const { ipcRenderer } = electron
 
 function App() {
-  console.log(electron)
-  console.log(contextBridge)
+  const [path, setPath] = useState('')
 
   const handleOpenFileClick = () => {
     ipcRenderer.send('select-file-dialog')
+    ipcRenderer.on('file-path', (e, path) => {
+      console.log(path);
+    });
   }
   
   const handleOpenFolderClick = () => {
     ipcRenderer.send('select-folder-dialog')
+    ipcRenderer.on('folder-path', (e, path) => {
+      setPath(path)
+    });
   }
   
   const handleExitClick = () => {
@@ -31,14 +37,15 @@ function App() {
 
   return (
     <div className="app">
-    <Header 
-      onOpenFileClick={handleOpenFileClick} 
-      onOpenFolderClick={handleOpenFolderClick}
-      onExitClick={handleExitClick}
-      onMinimizableBtnClick={handleMinimizableBtnClick}
-      onMaximizableBtnClick={handleMaximizableBtnClick}
-      onExitCrossBtnClick={handleExitClick}
-    />
+      <Header 
+        onOpenFileClick={handleOpenFileClick} 
+        onOpenFolderClick={handleOpenFolderClick}
+        onExitClick={handleExitClick}
+        onMinimizableBtnClick={handleMinimizableBtnClick}
+        onMaximizableBtnClick={handleMaximizableBtnClick}
+        onExitCrossBtnClick={handleExitClick}
+      />
+      <Player path={path} />
   </div>
   )
 }

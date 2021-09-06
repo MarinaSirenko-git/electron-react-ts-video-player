@@ -1,0 +1,13 @@
+.player__stop-control {
+  display: block;
+  width: 47px;
+  height: 47px;
+  background-color:#C4C4C4;
+  border: 1px solid #9C9595;
+  background-image: url(../../../assets/images/stop.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: 0;
+}
