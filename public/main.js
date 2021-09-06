@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron')
-const {openFileDialog, openFolderDialog, quitWindow } = require('./eventsMenu.js')
+const {openFileDialog, openFolderDialog, quitWindow, minimizeWindow, maximizeWindow } = require('./eventsMenu.js')
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -16,6 +16,9 @@ function createWindow () {
   })
   openFolderDialog(win)
   openFileDialog(win)
+
+  minimizeWindow(win)
+  maximizeWindow(win)
   quitWindow()
 
   //load the index.html from a url

@@ -36,8 +36,23 @@ const quitWindow = () => {
 })
 }
 
+const minimizeWindow = (win) => {
+  ipcMain.on('minimizable-window', () => {
+    win.minimize()
+  })
+}
+
+const maximizeWindow = (win) => {
+  ipcMain.on('maximizable-window', () => {
+    win.isMaximized() ? win.unmaximize() : win.maximize()
+  })
+}
+
+
 module.exports = {
   openFileDialog,
   openFolderDialog,
-  quitWindow
+  quitWindow,
+  minimizeWindow,
+  maximizeWindow
 } 
