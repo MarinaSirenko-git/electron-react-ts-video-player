@@ -21,13 +21,29 @@
   box-sizing: border-box;
 }
 
+.player-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 26px;
+}
+
 .player__video-duration {
   font-size: 18px;
   font-weight: 600;
-  padding: 0 14px;
+  padding: 0;
+  margin: 0;
   box-sizing: border-box;
+  width: 68px;
+  position: relative;
 }
 
-.player__video-duration_type_full {
+.player__video-duration_type_full::before {
+  content: '';
+  display: block;
+  height: 20px;
+  position: absolute;
+  top: 2px;
+  left: -13px;
   border-left: 1px solid #9C9C9C;
 }
