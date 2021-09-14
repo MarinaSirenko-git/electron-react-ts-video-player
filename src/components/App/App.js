@@ -10,15 +10,16 @@ function App() {
 
   const handleOpenFileClick = () => {
     ipcRenderer.send('select-file-dialog')
-    ipcRenderer.on('file-path', (e, path) => {
-      console.log(path);
+    ipcRenderer.on('file-path', (e, data) => {
+      const path = data[0].replace(/(\\)/g,'\\\\')
+      setPath(path)
     });
   }
   
   const handleOpenFolderClick = () => {
     ipcRenderer.send('select-folder-dialog')
-    ipcRenderer.on('folder-path', (e, path) => {
-      setPath(path)
+    ipcRenderer.on('folder-path', (e, data) => {
+      console.log(data)
     });
   }
   

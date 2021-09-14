@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useRef, useState, useCallback} from 'react'
 import PlayControl from './PlayControl/PlayControl'
 import StopControl from './StopControl/StopControl'
 import PreviousButton from './PreviousButton/PreviousButton'
@@ -10,56 +10,63 @@ import getTime from '../../utils/utils'
 import './Player.css'
 
 function Player({path}) {
-  console.log(path)
-  const videoElement = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTimeMs, setCurrentTimeMs] = useState(0);
-  const [durationMs, setDurationMs] = useState(0);
-  const [currentTime, setCurrientTime] = useState('00:00:00');
-  const [duration, setDuration] = useState('00:00:00');
-  const [progressValue, setProgressValue] = useState(0);
+  const videoElement = useRef(null)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [currentTimeMs, setCurrentTimeMs] = useState(0)
+  const [durationMs, setDurationMs] = useState(0)
+  const [currentTime, setCurrientTime] = useState('00:00:00')
+  const [duration, setDuration] = useState('00:00:00')
+  const [progressValue, setProgressValue] = useState(0)
+
+  const timeupdateHandle = useCallback(
+    () => {
+      videoElement.current.addEventListener('timeupdate', () => {
+        setCurrentTimeMs(videoElement.current.currentTime)
+        setDurationMs(videoElement.current.duration)
+        const value = 100 * currentTimeMs / durationMs
+        if(!Number.isNaN(value)) {
+          return setProgressValue(value)
+        }
+        setCurrientTime(getTime(videoElement.current.currentTime * 1000))
+        setDuration(getTime(videoElement.current.duration * 1000))
+      })
+    },
+    [currentTimeMs, durationMs]
+  )
 
   useEffect(() => {
-    videoElement.current.addEventListener('timeupdate', () => {
-      setCurrentTimeMs(videoElement.current.currentTime);
-      setDurationMs(videoElement.current.duration )
-      const value = 100 * currentTimeMs / durationMs;
-      setProgressValue(value);
-      setCurrientTime(getTime(currentTimeMs * 1000));
-      setDuration(getTime(durationMs * 1000));
-    })
-  }, [currentTimeMs, durationMs])
+    videoElement.current.onloadedmetadata = () => {
+      timeupdateHandle()
+    }}, [timeupdateHandle])
 
   const playControlHandler = () => {
     if(isPlaying) {
-      videoElement.current.pause();
+      videoElement.current.pause()
       setIsPlaying(false)
     } else {
-      videoElement.current.play();
+      videoElement.current.play()
       setIsPlaying(true)
     }
   }
 
   const stopControlHandler = () => {
-    videoElement.current.pause();
-    setIsPlaying(true);
+    videoElement.current.pause()
+    setIsPlaying(true)
     setCurrentTimeMs(0)
-    setProgressValue(0);
+    setProgressValue(0)
   }
 
   const decreaseControlHandler = () => {
-    videoElement.current.playbackRate = 0.5;
+    videoElement.current.playbackRate = 0.5
   }
 
   const increaseControlHandler = () => {
-    videoElement.current.playbackRate = 1.5;
+    videoElement.current.playbackRate = 1.5
   }
 
   return (
     <main className="player-container">
-      <video className="player" ref={videoElement}>
-        <source src={`C:\\Users\\Marina\\Videos\\Captures\\Лицо. Ревитоника\\Неделя_1\\withTrainer.mp4`} type="video/mp4" />
-      </video>
+      <video src={path} className="player" ref={videoElement} preload="metadata"></video>
       <ul className="player__controls">
         <PlayControl handleClick={playControlHandler} />
         <StopControl handleClick={stopControlHandler} />
@@ -67,10 +74,10 @@ function Player({path}) {
         <DecreasePlaybackControl handleClick={decreaseControlHandler}/>
         <IncreasePlaybackControl handleClick={increaseControlHandler}/>
         <NextButton />
-        <ProgressBar currientTime={currentTime} duration={duration} progressValue={progressValue} />
+        <ProgressBar currentTime={currentTime} duration={duration} progressValue={progressValue} />
       </ul>
     </main>
-  );
+  )
 }
 
 export default Player

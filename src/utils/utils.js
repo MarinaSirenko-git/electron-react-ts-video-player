@@ -1,13 +1,13 @@
 function getTime(ms){
 
-  var date = new Date(ms);
-  var time = [];
+  let date = new Date(ms)
+  let time = []
 
-  time.push(date.getUTCHours());
-  time.push(date.getUTCMinutes());
-  time.push(date.getUTCSeconds());
+  time.push(String(date.getUTCHours()).padStart(2, '0'))
+  time.push(String(date.getUTCMinutes()).padStart(2, '0'))
+  time.push(String(date.getUTCSeconds()).padStart(2, '0'))
 
-  return time.join(':');
+  return time.join(':')
 }
 
-export default getTime;
+export default getTime
