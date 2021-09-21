@@ -1,5 +1,4 @@
 .player__progress-bar {
-  display: block;
   height: 47px;
   padding-left: 17px;
   padding-right: 25px;
@@ -12,13 +11,60 @@
 }
 
 .player__progress-line {
+  display: block;
+  box-sizing: border-box;
+}
+
+.player__progress-line[value] {
   width: 673px;
   height: 10px;
   max-height: 10px;
   background-color: #fff;
   border-radius: 10px;
   margin-right: 49px;
-  box-sizing: border-box;
+  position: relative;
+}
+
+/* .player__progress-line[value]::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  background-color: #7ABCF9;
+} */
+
+.player__progress-line[value]::-webkit-progress-bar {
+  width: 673px;
+  height: 10px;
+  max-height: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  margin-right: 49px;
+}
+
+.player__progress-line[value]::-webkit-progress-value {
+  background-color: #7ABCF9;
+  border-radius: 10px;
+  position: relative;
+}
+
+.player__progress-line[value]::-moz-progress-bar {
+  width: 673px;
+  height: 10px;
+  max-height: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  margin-right: 49px;
+}
+
+.player__progress-line[value]::-moz-progress-value {
+  background-color: #7ABCF9;
+  border-radius: 10px;
 }
 
 .player-wrap {

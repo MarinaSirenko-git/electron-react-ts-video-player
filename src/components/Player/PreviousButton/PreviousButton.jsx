@@ -1,10 +1,10 @@
 import React from 'react';
 import './PreviousButton.css'
 
-function PreviousButton() {
+function PreviousButton({handleClick}) {
   return (
     <li className="player__control">
-      <button className="player__previous-btn" type="button"></button>
+      <button className="player__previous-btn" type="button" onClick={handleClick}></button>
     </li>
   );
 }

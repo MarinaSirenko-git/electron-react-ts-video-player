@@ -1,4 +1,6 @@
 const { app, ipcMain, dialog } = require('electron')
+const fs = require('fs')
+const path = require('path')
 
 const openFileDialog = (win) => {
   ipcMain.on('select-file-dialog', async (e, data) => {
@@ -17,7 +19,7 @@ const openFileDialog = (win) => {
 
 const openFolderDialog = (win) => {
   ipcMain.on('select-folder-dialog', async (e, data) => {
-  let path = await dialog.showOpenDialogSync(win, {
+  let folderPath = await dialog.showOpenDialogSync(win, {
       title: 'Выбор каталога',
       defaultPath: 'C:\\',
       buttonLabel: 'Выбрать каталог',
@@ -26,7 +28,10 @@ const openFolderDialog = (win) => {
       ],
       properties: ['openDirectory', 'createDirectory']
     })
-    win.webContents.send('folder-path', path);
+  fs.readdir(folderPath[0], function(err, videos) {
+    const pathVideos = videos.map(item => path.resolve(`${folderPath[0]}\\`, item))
+    win.webContents.send('folder-path', pathVideos)
+  })
 })
 }
 
@@ -47,7 +52,6 @@ const maximizeWindow = (win) => {
     win.isMaximized() ? win.unmaximize() : win.maximize()
   })
 }
-
 
 module.exports = {
   openFileDialog,

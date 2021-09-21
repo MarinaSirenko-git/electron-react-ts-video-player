@@ -2,25 +2,29 @@ import React, { useState } from 'react'
 import Header from '../Header/Header'
 import Player from '../Player/Player'
 import './App.css'
+import { replaceBackslashes, findIndex } from '../../utils/utils'
 const electron = window.require('electron')
 const { ipcRenderer } = electron
 
 function App() {
   const [path, setPath] = useState('')
+  const [folderPaths, setFolderPaths] = useState([])
 
   const handleOpenFileClick = () => {
     ipcRenderer.send('select-file-dialog')
     ipcRenderer.on('file-path', (e, data) => {
-      const path = data[0].replace(/(\\)/g,'\\\\')
+      const path = replaceBackslashes(data)
       setPath(path)
-    });
+    })
   }
   
   const handleOpenFolderClick = () => {
     ipcRenderer.send('select-folder-dialog')
     ipcRenderer.on('folder-path', (e, data) => {
-      console.log(data)
-    });
+      const paths = replaceBackslashes(data)
+      setPath(paths[0])
+      setFolderPaths(paths)
+    })
   }
   
   const handleExitClick = () => {
@@ -35,6 +39,16 @@ function App() {
     ipcRenderer.send('maximizable-window')
   }
 
+  const handleNextBtnClick = () => {
+    const currentIndex = findIndex(folderPaths, path)
+    setPath(folderPaths[currentIndex + 1])
+  }
+
+  const handlePreviousBtnClick = () => {
+    const currentIndex = findIndex(folderPaths, path)
+    setPath(folderPaths[currentIndex - 1])
+  }
+
 
   return (
     <div className="app">
@@ -46,7 +60,7 @@ function App() {
         onMaximizableBtnClick={handleMaximizableBtnClick}
         onExitCrossBtnClick={handleExitClick}
       />
-      <Player path={path} />
+      <Player path={path} onNextBtnClick={handleNextBtnClick} onPreviousBtnClick={handlePreviousBtnClick}/>
   </div>
   )
 }

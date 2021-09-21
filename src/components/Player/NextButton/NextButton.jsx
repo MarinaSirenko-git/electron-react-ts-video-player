@@ -1,10 +1,10 @@
 import React from 'react';
 import './NextButton.css'
 
-function NextButton() {
+function NextButton({handleClick}) {
   return (
     <li className="player__control">
-      <button className="player__next-btn" type="button"></button>
+      <button className="player__next-btn" type="button" onClick={handleClick}></button>
     </li>
   );
 }
