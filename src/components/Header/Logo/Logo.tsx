@@ -1,7 +1,7 @@
 import React from 'react';
 import './Logo.css'
 
-function Logo() {
+const Logo = () => {
   return (
     <div className="logo"></div>
   );

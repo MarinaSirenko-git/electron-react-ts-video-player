@@ -1,7 +1,8 @@
 import React from 'react';
+import { IWinCrlsProps } from '../../../interfaces/interfaces';
 import './WindowControls.css'
 
-function WindowControls({onMinimizableBtnClick, onMaximizableBtnClick, onExitCrossBtnClick}) {
+const WindowControls: React.FC<IWinCrlsProps> = ({onMinimizableBtnClick, onMaximizableBtnClick, onExitCrossBtnClick}) => {
   return (
     <ul className="window-controls">
       <li className="window-controls__item">

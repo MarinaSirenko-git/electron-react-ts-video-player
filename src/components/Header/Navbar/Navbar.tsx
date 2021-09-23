@@ -1,7 +1,8 @@
 import React from 'react';
+import { INavbarProps } from '../../../interfaces/interfaces';
 import './Navbar.css';
 
-function Navbar({ onOpenFileClick, onOpenFolderClick, onExitClick }) {
+const Navbar: React.FC<INavbarProps> = ({ onOpenFileClick, onOpenFolderClick, onExitClick }) => {
   
   return (
     <nav className="navbar">

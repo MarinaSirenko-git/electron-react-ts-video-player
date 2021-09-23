@@ -1,9 +1,9 @@
-export function replaceBackslashes(arr) {
+export function replaceBackslashes(arr: string[]) {
   const changedArr = arr.map(item => item.replace(/(\\)/g,'\\\\'))
   return changedArr;
 }
 
-export function getTime(ms){
+export function getTime(ms: number){
 
   let date = new Date(ms)
   let time = []
@@ -15,6 +15,6 @@ export function getTime(ms){
   return time.join(':')
 }
 
-export function findIndex(arr, searchEl) {
+export function findIndex(arr: string[], searchEl: string) {
   return arr.indexOf(searchEl, 0)
 }

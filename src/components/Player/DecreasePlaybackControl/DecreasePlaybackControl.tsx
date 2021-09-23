@@ -1,7 +1,8 @@
 import React from 'react';
+import { ICommonProps } from '../../../interfaces/interfaces';
 import './DecreasePlaybackControl.css'
 
-function DecreasePlaybackControl({ handleClick }) {
+const DecreasePlaybackControl: React.FC<ICommonProps> = ({ handleClick }) => {
   return (
     <li className="player__control">
       <button className="player__decrease-control" type="button" onClick={handleClick}></button>

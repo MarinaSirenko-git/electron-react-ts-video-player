@@ -7,57 +7,59 @@ import DecreasePlaybackControl from './DecreasePlaybackControl/DecreasePlaybackC
 import IncreasePlaybackControl from './IncreasePlaybackControl/IncreasePlaybackControl'
 import ProgressBar from './ProgressBar/ProgressBar'
 import { getTime } from '../../utils/utils'
+import { IPlayerProps } from '../../interfaces/interfaces'
 import './Player.css'
 
-function Player({path, onNextBtnClick, onPreviousBtnClick}) {
-  const videoElement = useRef(null)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [currentTime, setCurrientTime] = useState('00:00:00')
-  const [duration, setDuration] = useState('00:00:00')
-  const [progressValue, setProgressValue] = useState(0)
-
+const Player: React.FC<IPlayerProps> = ({path, onNextBtnClick, onPreviousBtnClick}) => {
+  const videoElement = useRef<HTMLVideoElement>(null)
+  const video = videoElement.current!
+  const [isPlaying, setIsPlaying] = useState<Boolean>(false)
+  const [currentTime, setCurrientTime] = useState<string>('00:00:00')
+  const [duration, setDuration] = useState<string>('00:00:00')
+  const [progressValue, setProgressValue] = useState<number>(0)
+  
   const timeupdateHandle = useCallback(
     () => {
-      videoElement.current.addEventListener('timeupdate', () => {
-        const value = 100 * videoElement.current.currentTime / videoElement.current.duration
+      video.addEventListener('timeupdate', () => {
+        const value = 100 * video.currentTime / video.duration
         if(!Number.isNaN(value)) {
           return setProgressValue(value)
         }
-        setCurrientTime(getTime(videoElement.current.currentTime * 1000))
-        setDuration(getTime(videoElement.current.duration * 1000))
+        setCurrientTime(getTime(video.currentTime * 1000))
+        setDuration(getTime(video.duration * 1000))
       })
     },
-    []
+    [video]
   )
 
   useEffect(() => {
-    videoElement.current.onloadedmetadata = () => {
+    video.onloadedmetadata = () => {
       timeupdateHandle()
-    }}, [timeupdateHandle])
+    }}, [timeupdateHandle, video])
 
   const playControlHandler = () => {
     if(isPlaying) {
-      videoElement.current.pause()
+      video.pause()
       setIsPlaying(false)
     } else {
-      videoElement.current.play()
+      video.play()
       setIsPlaying(true)
     }
   }
 
   const stopControlHandler = () => {
-    videoElement.current.pause()
+    video.pause()
     setIsPlaying(true)
-    videoElement.current.currentTime = 0
+    video.currentTime = 0
     setProgressValue(0)
   }
 
   const decreaseControlHandler = () => {
-    videoElement.current.playbackRate = 0.5
+    video.playbackRate = 0.5
   }
 
   const increaseControlHandler = () => {
-    videoElement.current.playbackRate = 1.5
+    video.playbackRate = 1.5
   }
 
   const handleNextBtnClick = () => {
