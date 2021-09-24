@@ -10,3 +10,7 @@ http://xn--e1akicaccic2c.xn--p1ai/pdf/electron/
 тз 
 
 https://docs.google.com/document/d/1wLnKH3Ya6r4fDO25eD1aBtRKJNAYEfC14iZLloh8IiI/edit
+
+Спорные моменты:
+добавить типы в main.js тоже
+избежать проблем с разделителями path.join

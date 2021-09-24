@@ -1,6 +1,4 @@
-// @ts-ignore
 const { app, BrowserWindow } = require('electron')
-// @ts-ignore
 const {openFileDialog, openFolderDialog, quitWindow, minimizeWindow, maximizeWindow } = require('./eventsMenu.js')
 
 function createWindow () {

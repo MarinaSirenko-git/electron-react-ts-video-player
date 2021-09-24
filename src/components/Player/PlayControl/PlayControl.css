@@ -11,3 +11,7 @@
   box-sizing: border-box;
   padding: 0;
 }
+
+.player__play-control:hover {
+  background-color: #9C9595;
+}

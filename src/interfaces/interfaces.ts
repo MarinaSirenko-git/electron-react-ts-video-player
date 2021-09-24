@@ -1,11 +1,18 @@
 export interface IPlayerProps {
   path: string,
   onNextBtnClick: () => void,
-  onPreviousBtnClick: () => void
+  onPreviousBtnClick: () => void,
+  isDisabledPrev: boolean,
+  isDisabledNext: boolean
 }
 
 export interface ICommonProps {
   handleClick: () => void
+}
+
+export interface IPrevNextProps {
+  handleClick: () => void
+  isDisabled: boolean
 }
 
 export interface IProgressBarProps {

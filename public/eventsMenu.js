@@ -1,10 +1,9 @@
-// @ts-ignore
 const { app, ipcMain, dialog } = require('electron')
 const fs = require('fs')
 const path = require('path')
 
-const openFileDialog = (win: any) => {
-  ipcMain.on('select-file-dialog', async (e: any, data: any) => {
+const openFileDialog = (win) => {
+  ipcMain.on('select-file-dialog', async (e, data) => {
     let path = await dialog.showOpenDialogSync(win, {
         title: 'Выбор файла',
         defaultPath: 'C:\\',
@@ -18,8 +17,8 @@ const openFileDialog = (win: any) => {
   })  
 }
 
-const openFolderDialog = (win: any) => {
-  ipcMain.on('select-folder-dialog', async (e: any, data: any) => {
+const openFolderDialog = (win) => {
+  ipcMain.on('select-folder-dialog', async (e, data) => {
   let folderPath = await dialog.showOpenDialogSync(win, {
       title: 'Выбор каталога',
       defaultPath: 'C:\\',
@@ -29,8 +28,8 @@ const openFolderDialog = (win: any) => {
       ],
       properties: ['openDirectory', 'createDirectory']
     })
-  fs.readdir(folderPath[0], function(err: any, videos: any) {
-    const pathVideos = videos.map((item: any) => path.resolve(`${folderPath[0]}\\`, item))
+  fs.readdir(folderPath[0], function(err, videos) {
+    const pathVideos = videos.map((item) => path.resolve(`${folderPath[0]}\\`, item))
     win.webContents.send('folder-path', pathVideos)
   })
 })
@@ -42,13 +41,13 @@ const quitWindow = () => {
 })
 }
 
-const minimizeWindow = (win: any) => {
+const minimizeWindow = (win) => {
   ipcMain.on('minimizable-window', () => {
     win.minimize()
   })
 }
 
-const maximizeWindow = (win: any) => {
+const maximizeWindow = (win) => {
   ipcMain.on('maximizable-window', () => {
     win.isMaximized() ? win.unmaximize() : win.maximize()
   })

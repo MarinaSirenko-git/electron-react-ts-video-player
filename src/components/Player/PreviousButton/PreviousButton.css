@@ -11,3 +11,12 @@
   box-sizing: border-box;
   padding: 0;
 }
+
+.player__previous-btn:hover {
+  background-color: #9C9595;
+}
+
+.player__previous-btn:disabled {
+  background-color: #cdc8c8;
+  cursor: default;
+}

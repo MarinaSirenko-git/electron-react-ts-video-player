@@ -18,3 +18,25 @@ export function getTime(ms: number){
 export function findIndex(arr: string[], searchEl: string) {
   return arr.indexOf(searchEl, 0)
 }
+
+export function setPathToLocalStorage(item: any, index: number) {
+  window.localStorage.setItem('path', JSON.stringify(item))
+  window.localStorage.setItem('indexPath', JSON.stringify(index))
+}
+
+export function getPathFromLocalStorage() {
+  const pathsFolder = JSON.parse(window.localStorage.getItem('path')!)
+  const index = parseInt(window.localStorage.getItem('indexPath')!)
+  if(pathsFolder) { 
+    return {
+      pathsFolder,
+      path: pathsFolder[index]
+    }
+  }
+
+}
+
+export function removePathToLocalStorge() {
+  window.localStorage.removeItem('path')
+  window.localStorage.removeItem('indexPath')
+}

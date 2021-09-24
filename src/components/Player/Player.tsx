@@ -10,7 +10,7 @@ import { getTime } from '../../utils/utils'
 import { IPlayerProps } from '../../interfaces/interfaces'
 import './Player.css'
 
-const Player: React.FC<IPlayerProps> = ({path, onNextBtnClick, onPreviousBtnClick}) => {
+const Player: React.FC<IPlayerProps> = ({path, onNextBtnClick, onPreviousBtnClick, isDisabledPrev, isDisabledNext}) => {
   const videoElement = useRef<HTMLVideoElement>(null)
   const video = videoElement.current!
   const [isPlaying, setIsPlaying] = useState<Boolean>(false)
@@ -20,22 +20,22 @@ const Player: React.FC<IPlayerProps> = ({path, onNextBtnClick, onPreviousBtnClic
   
   const timeupdateHandle = useCallback(
     () => {
+      setDuration(getTime(video.duration * 1000))
       video.addEventListener('timeupdate', () => {
-        const value = 100 * video.currentTime / video.duration
-        if(!Number.isNaN(value)) {
-          return setProgressValue(value)
-        }
         setCurrientTime(getTime(video.currentTime * 1000))
-        setDuration(getTime(video.duration * 1000))
+        const value = 100 * video.currentTime / video.duration
+        if(!Number.isNaN(value)) setProgressValue(value)
       })
     },
     [video]
   )
 
   useEffect(() => {
-    video.onloadedmetadata = () => {
-      timeupdateHandle()
-    }}, [timeupdateHandle, video])
+    if(video) {
+      video.onloadedmetadata = () => {
+        timeupdateHandle()
+      }
+    }}, [timeupdateHandle, video, currentTime])
 
   const playControlHandler = () => {
     if(isPlaying) {
@@ -76,10 +76,10 @@ const Player: React.FC<IPlayerProps> = ({path, onNextBtnClick, onPreviousBtnClic
       <ul className="player__controls">
         <PlayControl handleClick={playControlHandler} />
         <StopControl handleClick={stopControlHandler} />
-        <PreviousButton handleClick={handlePreviousBtnClick} />
+        <PreviousButton handleClick={handlePreviousBtnClick} isDisabled={isDisabledPrev}/>
         <DecreasePlaybackControl handleClick={decreaseControlHandler}/>
         <IncreasePlaybackControl handleClick={increaseControlHandler}/>
-        <NextButton handleClick={handleNextBtnClick} />
+        <NextButton handleClick={handleNextBtnClick} isDisabled={isDisabledNext} />
         <ProgressBar currentTime={currentTime} duration={duration} progressValue={progressValue} />
       </ul>
     </main>
