@@ -7,7 +7,7 @@
 - Перейди в корень  
 `cd electron-react-ts-video-player`  
 - Установи зависимости  
-`yarn add`  
+`yarn`  
 - Открой окно терминала и запусти CRA  
 `yarn run start`  
 - Открой второе окно терминала и запусти Electron  
