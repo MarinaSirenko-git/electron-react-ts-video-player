@@ -27,6 +27,7 @@ const App: React.FC = () => {
       } else {
         const path = replaceBackslashes(data)
         setPath(path[0])
+        setFolderPaths(path)
         setPathToLocalStorage(path, 0)
       }
     })
@@ -56,12 +57,12 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const index = findIndex(folderPaths, path)
-    if(folderPaths.length > 1 && index === 0) {
-      setIsDisabledPrevBtn(true)
-      setIsDisabledNextBtn(false)
-    } else if(folderPaths.length === 1) {
+    if(index === -1 || folderPaths.length === 1) {
       setIsDisabledPrevBtn(true)
       setIsDisabledNextBtn(true)
+    }  else if(folderPaths.length > 1 && index === 0) {
+      setIsDisabledPrevBtn(true)
+      setIsDisabledNextBtn(false)
     } else if(folderPaths.length - 1 === index) {
       setIsDisabledPrevBtn(false)
       setIsDisabledNextBtn(true)
